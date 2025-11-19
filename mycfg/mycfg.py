@@ -1,8 +1,9 @@
-from ast import Or
 import json
 import sys
-from typing import Any, Union
+from ast import Or
 from collections import OrderedDict
+from typing import Any, Union
+
 import graphviz
 
 TERMINATORS = ["jmp", "br", "ret"]
@@ -19,10 +20,11 @@ def blockify(body):
                 yield block
                 block = []
         else:
-            yield block
+            if block:
+                yield block
             block = [inst]
-
-    yield block
+    if block:
+        yield block
 
 
 def block_mapper(blocks):
